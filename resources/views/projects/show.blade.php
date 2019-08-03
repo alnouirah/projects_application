@@ -16,4 +16,19 @@
         <a href="/projects/{{ $project->id }}/edit" class="btn btn-primary">Edit</a>
     </p>
 
+    @if ($project->tasks->count() > 0 )
+        
+        <div>
+            @foreach ($project->tasks as $task)
+
+                    
+                    <li>{{ $task->description }}</li>
+
+                    
+            @endforeach
+        </div>
+        
+    @endif
+    
+
 @endsection
