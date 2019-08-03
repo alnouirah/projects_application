@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
+    
     public function index(){
     
         $projects = Projects::all();
@@ -18,52 +19,52 @@ class ProjectsController extends Controller
 
     public function store(){
 
-        $project  = new Projects();
+        request()->validate([
+            'title' =>  ['required','min:3'],
+            'description'   =>  ['required','min:3']
+        ]);
 
-        $project->title = request('title');
-        
-        $project->description = request('description');
-
-        $project->save();
-
+        Projects::create(request(['title','description']));
 
         return redirect('/projects');
     }
+
+
 
     public function create(){
 
         return view('projects.create');
     }
 
-    public function show(){
 
+
+    public function show(Projects $project){
+
+        return view('projects.show',compact('project'));
 
     }
 
-    public function edit($id){
 
-        $project = Projects::findOrFail($id);
+    public function edit(Projects $project){
 
         return view('projects.edit',compact('project'));
     }
 
 
-    public function update($id){
-        $project = Projects::findOrFail($id);
+    public function update(Projects $project){
 
-        $project->title = request('title');
+        request()->validate([
+            'title' => ['required','min:5'],
+            'description'   =>  ['required','min:5']
+        ]);
 
-        $project->description = request('description');
-        
-        $project->save();
+        $project->update(request(['title','description']));
 
         return redirect('/projects');
 
     }
 
-    public function destroy($id){
-
-        $project = Projects::findOrFail($id);
+    public function destroy(Projects $project){
 
         $project->delete();
 

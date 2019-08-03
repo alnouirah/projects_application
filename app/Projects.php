@@ -9,4 +9,7 @@ class Projects extends Model
     protected $table = 'projects';
 
     protected $fillable = ['title','description'];
+
+    // protected $fillable = ['title','description'];
 }
+
